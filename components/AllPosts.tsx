@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '@/firebase'; // Adjust the import path as necessary
-import { collection, getDocs, DocumentData } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 import { Timestamp } from 'firebase/firestore';
 
 interface Post {
@@ -20,7 +20,7 @@ const AllPosts: React.FC = () => {
         const querySnapshot = await getDocs(collection(db, 'posts'));
         const postsData = querySnapshot.docs.map((doc): Post => {
           const data = doc.data() as Omit<Post, 'id'>;
-          return { id: doc.id, ...data };
+          return { id: doc.id, ...data } as Post;
         });
 
         // Sort posts by createdAt field in descending order
